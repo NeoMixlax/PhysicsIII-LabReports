@@ -1,0 +1,75 @@
+\documentclass[spanish,notitlepage,letterpaper, 12pt]{article} 
+\usepackage[spanish]{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}      
+\geometry{letterpaper}                  
+\usepackage{epstopdf}
+\usepackage{fancyhdr} % Paquete para encabezados y pies de pag
+\usepackage{listings}
+\usepackage{color}
+\usepackage{placeins}
+\usepackage{csquotes}
+\usepackage{gensymb} 
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=shadowbox,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+  rulesepcolor=\color{blue}
+}
+
+\pagestyle{fancy} 
+\chead{\bfseries Informe X - Grupo C1B. Subgrupo 2} 
+\rhead{date}
+\cfoot{Universidad Industrial de Santander} 
+\rfoot{\thepage} 
+
+\voffset = -0.25in 
+\textheight = 8.0in 
+\textwidth = 6.5in
+\oddsidemargin = 0.in
+\headheight = 20pt 
+\headwidth = 6.5in
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0,5pt}
+\begin{document}
+\input{title-page}
+\tableofcontents
+
+\newpage
+
+\section{Resumen}
+
+\section{Introducción}
+
+\subsection{Marco teórico} \label{I.MT}
+\section{Metodología}
+\subsection{Materiales}
+\subsection{Fase 1}
+\subsection{Fase 2}
+\subsection{Fase 3}
+\section{Tratamiento de datos} \label{TD}
+\section{Análisis de resultados}
+\section{Conclusiones}
+\section{Referencias} 
+\bibliographystyle{unsrt}
+\bibliography{../general-references/references}
+\end{document}
