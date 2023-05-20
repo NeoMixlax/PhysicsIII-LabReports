@@ -14,6 +14,13 @@
 \usepackage{textcomp}
 \usepackage{gensymb}
 \usepackage{array}
+\usepackage{pgfplots}
+\usepackage{lipsum}
+\usepackage{circuitikz}
+\usepackage{tikz}
+
+%Specifies how thick the bipoles are, e.g. the capacitor, the inductor, ...
+\ctikzset{bipoles/thickness=1.2}
 
 \pagestyle{fancy}
 \chead{\bfseries Informe 4 - Grupo C1B. Subgrupo 2} 
@@ -21,6 +28,7 @@
 \cfoot{Universidad Industrial de Santander} 
 \rfoot{\thepage} 
 
+\pgfplotsset{compat=1.18, width=10cm}
 \voffset = -0.25in 
 \textheight = 8.0in 
 \textwidth = 6.5in
@@ -36,6 +44,7 @@
 \newpage
 
 \section{Resumen}
+\lipsum[1]
 \section{Introducción}
 Los circuitos eléctricos representan un eje fundamental en la sociedad actual. Aquellos de tipo RLC son alimentados por una
 fuente AC de voltaje constante $V$ y frecuencia variable $\omega$ , la corriente que
@@ -44,11 +53,7 @@ amplitud de la corriente $I = \frac{V}{Z}$ , donde $Z$ es la impedancia del circ
 impedancia está relacionada con la reactancia capacitiva $X_C$, la reactancia
 inductiva $X_L$, y la resistencia. Una de las características principales que tienen
 estas reactancias es su dependencia con la frecuencia de la fuente de
-alimentación, lo que conduce a que la impedancia depende de $\omega$ . Para estudiar
-los efectos que se producen sobre el voltaje en cada elemento, la corriente, la
-reactancia capacitiva, la reactancia inductiva y la impedancia en el circuito RLC
-en serie, alimentado con el tipo de fuente AC de amplitud constante A y frecuencia
-variable $\omega$\par
+alimentación, lo que conduce a que la impedancia depende de $\omega$.\par
 \subsection{Objetivos}
 \begin{itemize}
     \item \textbf{General: }Estudiar las características de un circuito RLC en serie con una fuente de
@@ -64,288 +69,242 @@ la variación de la resistencia.
     \end{enumerate}
 \end{itemize}
 \subsection{Marco teórico} \label{I.MT}
-\subsubsection{Péndulo de Pohl}
-El péndulo de Pohl consiste en una rueda de metal con momento de inercia $I$ que
-oscila (Fig. \ref{fig:1} y un resorte helicoidal que produce un momento de torsión restaurador cuando la cuerda gira. \eqref{eq:1}
-\begin{align}\label{eq:1}
-    M=-K\theta
-\end{align}
-La situación descrita produce un movimiento oscilatorio que tiende a llevar al péndulo a la posición de equilibrio.
+\subsubsection{Oscilaciones en un circuito RLC}
+Para entender la respuesta natural del circuito RLC de manera intuitiva, es pertinente pensar en el movimiento de la carga en el circuito a lo largo del tiempo.\par
+\begin{figure}[!ht]
+    \centering
+    \begin{circuitikz}
+        % Circuit
+        \draw[line width=0.8]
+        (2,7) to (2,1)
+        (2,7) to [resistor, l_=$R$] ++(6,0) to [inductor, l_=$L$] ++(0,-6) to [capacitor, l_=$C$] +(-6,0) ;
+        % Grid
+        %\draw[help lines] (0,0) grid (10,10);
+    \end{circuitikz}
+    \caption{\textit{Circuito RLC.}}
+    \label{fig:rlc}
+\end{figure}
+%\begin{figure}[!ht]
+%    \centering
+%    \includegraphics[width=10cm]{images/rlc.png}
+%    \caption{\textit{Circuito RLC.}}
+%    \label{fig:rlc}
+%\end{figure}
+Si se coloca una carga inicial en el capacitor y después se cierra el interruptor (Fig. \ref{fig:rlc}), la carga irá de una placa del capacitor a la otra, pasando a través del
+inductor y del resistor en ambas direcciones. Cada ciclo de oscilación será un poco menor que el anterior, porque se pierde energía conforme la carga en
+movimiento calienta el resistor (Fig. \ref{fig:q-in-time}).\par
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}
+            [
+            axis lines = center,
+            domain = 0:3,
+            xlabel = $t$,
+            xmin = -0.5,
+            xmax = 3.5,
+            xtick={0},
+            ylabel = $q$,
+            ymin=-1.5,
+            ymax=1.5,
+            ytick={-1,1},
+            yticklabels={$-q_{max}$,$q_{max}$},
+            samples=50,
+            ]
+            \addplot [orange] {e^(-3*x/4)*cos(deg(2*pi*x))};
+            \addplot [dashed] {e^(-3*x/4)}
+                node[right,pos=0.2]{$q_{max}e^{-\frac{Rt}{2L}}$};
+            \addplot [dashed] {-e^(-3*x/4)}
+                node[right,pos=0.2]{$-q_{max}(-e^{-\frac{Rt}{2L}})$};
+        \end{axis}
+    \end{tikzpicture}
+    \caption{\textit{Gráfica de la carga en función del tiempo para el capacitor en un circuito RLC.}}
+    \label{fig:q-in-time}
+\end{figure}
 \newpage
+Para el análisis que se pretende se puede escribir el cambio de energía como una función del tiempo. \cite{serway_jewett_2017}\par
+\begin{equation}\label{eq:energy}
+    \frac{du}{dt}=\frac{q}{c}\frac{dq}{dt}+iL\frac{di}{dt}=-i^{2}R
+\end{equation}
+Al reemplazar $i=\frac{dq}{dy}$ y $\frac{di}{dt}=\frac{d^qq}{dt^2}$ en \eqref{eq:energy} se tiene que:
+\begin{equation}\label{eq:ed-rlc}
+    \frac{d^2q}{dt^2}+\frac{R}{L}\frac{dq}{dt}+\frac{q}{LC}=0
+\end{equation}
+La solución de \eqref{eq:ed-rlc} es $q=q_{max}e^{-\frac{Rt}{2L}}\cos{(\omega t)}$ donde:
+\begin{equation}\label{eq:frequency}
+    \omega=\sqrt{\omega_0-\frac{R}{2L}^2}
+\end{equation}
+    Siendo $\omega_0=\frac{1}{\sqrt{LC}}$ la frecuencia angular de resonancia.
+\subsubsection{Circuito RLC en serie}
+La corriente que varía con el timepo en el circuito RLC puede describirse como el fasor $I_m$ sobre eleje vertical, donde el ángulo de dicho fasor es $(\omega t-\theta)$ tal y como se representa en \eqref{eq:i-fasor}.
+\begin{equation}\label{eq:i-fasor}
+    i=I_m\sin(\omega t-\theta)
+\end{equation}
+Donde $I_m$ es la magnitud del fasor $\vec{I_m}$. El voltaje a través de todos los componentes en el circuito está dado por la fuente $fem$ que varía con el tiempo. (Fig. \ref{fig:rlc-fem})\par
+\bigskip
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=10.0cm]{images/pendulo-pohl.png}
-    \caption{\textit{Montaje del péndulo de Pohl}}
-    \label{fig:1}
+    \begin{circuitikz}
+        % Circuit
+        \draw[line width=0.8]
+        (2,7) to [sinusoidal voltage source, l_=$V_S$, i=$I$] (2,1)
+        (2,7) to [resistor, l_=$R$] ++(6,0) to [inductor, l_=$L$] ++(0,-6) to [capacitor, l_=$C$] +(-6,0) ;
+        % Grid
+        %\draw[help lines] (0,0) grid (10,10);
+    \end{circuitikz}
+    \caption{\textit{Circuito RLC con FEM variable en el tiempo.}}
+    \label{fig:rlc-fem}
 \end{figure}
-Debido a la fricción, la amplitud disminuye con el tiempo generando un movimiento oscilatorio amortiguado. En el péndulo, el amortiguamiento se realiza pasando la rueda de metal a través del campo magnético de un electroimán y como resultado se genera en el disco una corriente ``parásita''. De modo
-que el momento de las fuerzas que ejerce el campo magnético sobre las corrientes es proporcional a la velocidad angular de la rueda y va en sentido contrario.\par
+La ecuación \eqref{eq:rlc-voltage} también representa el cambio de este voltaje\par
+\begin{equation}\label{eq:rlc-voltage}
+    V=V_{fem}(t)=V_m\sin{(\omega t)}
+\end{equation}
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[scale=1.5, transform shape]
+        \draw[line width=0.8,dashed]
+            (0,1.25) node[left] {$i$} to (2.150,1.25) ;
+
+        \coordinate (vec1) at (0:1.5); 
+        \coordinate (vec2) at (30:2.5);
+        \coordinate (vec3) at (0:2.5);
+        \coordinate (vec4) at (90:2);
+        \coordinate (vec5) at (270:2);
+        \coordinate (vec6) at (180:2);
+
+        \draw[->,thick,green] (0,0) -- (vec2) node[below right, black] {$I_m$};
+        \draw[->,thick,black] (0,0) -- (vec3);
+        \draw[->,thick,black] (0,0) -- (vec4);
+        \draw[->,thick,black] (0,0) -- (vec5);
+        \draw[->,thick,black] (0,0) -- (vec6);
+
+        \draw [thick] (1.0,0) arc (0:30:1cm)    node [midway, right] {$\omega t-\theta$};
+        % Grid
+        %\draw[help lines] (-3,-3) grid (3,3);
+    \end{tikzpicture}
+    \caption{\textit{Fasor de corriente.}}
+    \label{fig:current-fasor}
+\end{figure}
+\newpage
+En este circuito, el resistor, el voltae $V_R$ y la corriente $i$ están en fase entre sí. Mientras que el fasor voltaje $V_m$ está en fase con $I_m$ (Fig. \ref{fig:current-fasor}). La corriente $i$ está adelante del voltaje $V_c$, de modo que dicho fasor tiene un ángulo que es menor del de $I_m$ y $V_R$. La corriente del inductor
+$i$ se atrasa con respecto al voltaje $V_L$ por $\frac{\pi}{2}\ rad$ más que los ángulos de $I_m$ y $V_R$. (Fig. \ref{fig:voltage-fasor})
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}
+
+        \coordinate (vec1) at (120:2.5); 
+        \coordinate (vec2) at (30:2.5);
+        \coordinate (vec3) at (-60:2.5);
+        \coordinate (vec4) at (0:3);
+        \coordinate (vec5) at (90:3);
+        \coordinate (vec6) at (270:3);
+        \coordinate (vec7) at (180:3);
+
+        \draw[line width=0.8,dashed] (0,1.25) node[left] {$V_R$} -- (vec2);
+        \draw[line width=0.8,dashed] (0,2.165) node[right] {$V_L$} -- (vec1);
+        \draw[line width=0.8,dashed] (0,-2.165) node[left] {$V_C$} -- (vec3);
+
+        \draw[->,thick,red] (0,0) -- (vec1) node[below left, black] {$\vec{V_L}$};
+        \draw[->,thick,red] (0,0) -- (vec2) node[below right, black] {$\vec{V_R}$};
+        \draw[->,thick,red] (0,0) -- (vec3) node[above right, black] {$\vec{V_C}$};
+        \draw[->,thick,black] (0,0) -- (vec4);
+        \draw[->,thick,black] (0,0) -- (vec5);
+        \draw[->,thick,black] (0,0) -- (vec6);
+        \draw[->,thick,black] (0,0) -- (vec7);
+
+        \draw [thick] (1.0,0) arc (0:30:1cm)    node [midway, right] {$\omega t-\theta$};
+        % Grid
+        %\draw[help lines] (-3,-3) grid (3,3);
+    \end{tikzpicture}
+    \caption{\textit{Fasor de voltajes.}}
+    \label{fig:voltage-fasor}
+\end{figure}
+\subsubsection{Impedancia}
+La impedancia de un circuito depende de la frecuencia de la $fem$ , se denota con
+el símbolo $Z$ y tiene la unidad de ohm, justo como la resistencia.
+\begin{equation}\label{eq:impedance}
+    Z=\sqrt{R^2+(X_L-X_C)^2}
+\end{equation}
+La corriente que circula en un circuito de CA depende de la diferencia entre la reactancia inductiva $R_L$ y la capacitiva $R_A$ y se denomina \textbf{reactancia total}. La ecuación \eqref{eq:impedance} ilustra esta diferencia.\par
 \bigskip
-El movimiento que realiza el péndulo de Pohl puede describirse mediante una ecuación diferencial lineal de segundo órden \eqref{eq:2}. \cite{serway_jewett_2017}
-\begin{align}\label{eq:2}
-    \ddot{\theta}+\beta\dot{\theta}+{\omega_0}^2\theta=0
-\end{align}
-De la ecuación \eqref{eq:2}, la constante de amortiguamiento $\gamma=\frac{\beta}{2I}$, la frecuencia natural del oscilador $\omega_0=\sqrt{\frac{k}{I}}$, mientras $I$ representa el momento de inercia del disco y $K$ la constante de restauración del resorte helicoidal.\par
-\bigskip
-Para este tipo de movimientos la frecuencia depende de la frecuencia natural del sistema así como de la constante de amortiguamiento $\gamma$. \eqref{eq:3}
-\begin{align}\label{eq:3}
-    \omega=\sqrt{{\omega_0}^2-\gamma^2}
-\end{align}
-Por otra parte, la solución de la ecuación diferencial \eqref{eq:2} tiene la forma de una multiplicación de fuciones; una exponencial y una sinusoidal. \eqref{eq:4}
-\begin{align}\label{eq:4}
-    \theta(t)=\theta_0e{-\gamma t}\cos{\omega t}
-\end{align}
-Para la ecuación \eqref{eq:4} $\theta_0$ es el ángulo inicial de rotación en el instante $t_0$.\par
-\bigskip
-Es importante notar que la relación entre las variables que afectan la frecuencia describen tres tipos de movimientos:
+Para un circuito RLC conectado en serie existen tres situaciones:
 \begin{enumerate}
-    \item Cuando ${\omega_0}^2>\gamma^2$, se tiene un \textbf{movimiento amortiguado}, o sea que el sistema oscila con amplitud decreciente.
-    \item Cuando ${\omega_0}^2=\gamma^2$, se tiene un \textbf{amortiguamiento crítico}, o sea que el sistema vuelve a su posición de equilibrio sin oscilar cuando se le desplaza.
-    \item Cuando ${\omega_0}^2<\gamma^2$, se tiene un \textbf{movimiento sobreamortiguado}, en este caso no hay oscilación, pero el sistema retorna a su punto de equilibrio más lento que cuando está críticamente amortiguado.
+    \item Si $X_L>X_C$\\
+        $\theta$ es positivo y la corriente en el circuito va detras del voltaje en el circuito (se asemeja a uno con un solo inductor).
+    \item Si $X_L<X_C$\\
+        $\theta$ es negativo y la corriente en el circuito va adelante del voltaje en el circuito (parece uno con un solo capacitor) 
+    \item Si $X_L=X_C$\\
+        $\theta$ es cero y la corriente en el circuito se encontrará en fase con el voltaje del mismo, luego se asemeja a un circuito con una sola resistencia. Cuando $\theta=0$ se dice que el circuito está en resonancia.
 \end{enumerate}
-\subsubsection{Oscilaciones forzadas}
-La ecuación \eqref{eq:2} puede ser utilizada para las oscilaciones forzadas con la diferencia de que ahora se ejerce una fuerza externa periódica, luego la ecuación tomaría la forma de \eqref{eq:5}.
-\begin{align}\label{eq:5}
-    \ddot{\theta}+\beta\dot{\theta}+{\omega_0}^2\theta=F_0\cos{(\omega t)}
-\end{align}
-donde $F_0=\frac{M_0}{I}$ y cuya solución general es la misma que la del movimiento libre añadiendole una solución partícular de la forma \eqref{eq:6}.
-\begin{align}\label{eq:6}
-    \theta=A_F\cos{(\omega t - \delta)}
-\end{align}
-donde la amplitud del movimiento forzado $A_F$ depende de la magnitud del momento aplicado y de la frecuencia externa $\omega$ tal como se muestra en la ecuación \eqref{eq:7}.
-\begin{align}\label{eq:7}
-    A_F=\frac{F_0}{\sqrt{(\omega^2-{\omega_0}^2)^2}+\gamma^2\omega^2}
-\end{align}
-mientras que el desfase entre el momento externo y la oscilación se puede ver en la ecuación \eqref{eq:8}.
-\begin{align}\label{eq:8}
-    \delta=\arctan{\left(\frac{2\gamma\omega}{{\omega_0}^2-\omega^2}\right)}
-\end{align}
-En este caso, existe una frecuencia para la cual la amplitud es máxima, esta es llamada \textbf{frecuencia de resonancia} y se expresa de la forma \eqref{eq:9}.
-\begin{align}\label{eq:9}
-    \omega_R=\sqrt{{\omega_0}^2-2\gamma^2}
-\end{align}
-Según la ecuación \eqref{eq:9} se hace visible que en el caso de que no exista amortiguamiento, la frecuencia de resonancia corresponde a
-la frecuencia natural y la amplitud tenderá al infinito; para frecuencias altas la amplitud
-tenderá a cero y para muy bajas frecuencias la amplitud tenderá a $F_0$.
+La amplitud de la corriente $I_m$ en el circuito RCL en serie depende de la frecuencia de la $fem$ que varía con el tiempo y se produce cuando el sistema está en resonancia.
+\begin{equation}
+    \omega L=\frac{1}{\omega C}=0
+\end{equation}
+La energía que almacenan temporalmente los campos se devuelve al circuito (por ejemplo cuando el capacitor se descarga o el campo magnético del
+inductor se autoinduce). Esto hace que la potencia total suministrada por la
+fuente no siempre sea la consumida por el circuito. Parte de la potencia se utiliza para crear estos campos, pero no se consume. Sin embargo, la fuente debe proveerla para el funcionamiento del circuito.
+\subsubsection{Potencia reactiva}
+Se trata de la potencia necesaria para crear los campos eléctricos y magnéticos. Es una
+potencia devuelta por el circuito, pero que está presente en el funcionamiento.
+Se mide en watts.
+\begin{equation}
+    Q=I^2\cdot(X_L-X_C)
+\end{equation}
+Los medidores de voltaje y corriente utilizados miden los valores eficaces o valores rms (root mean square).
+\begin{equation}
+    V_{ef}=\frac{V_{max}}{\sqrt{2}}
+\end{equation}
+\begin{equation}
+    I_{ef}=\frac{I_{max}}{\sqrt{2}}
+\end{equation}
 \section{Metodología}
-El desarrollo del proyecto se realizó en tres etapas o fases metodológicas, en las
-cuales se procedió a la recolección de los datos y posteriormente su respectivo procesamiento.
-En la primera fase se obtuvieron los datos de las amplitudes y el tiempo de $3$ oscilaciones
-del movimiento débilmente amortiguado con el fin de demostrar que ésta decae
-exponencialmente con el tiempo. Por otra parte, también se observaron los movimientos
-críticamente amortiguados y sobre amortiguados. En la segunda fase se registrarón los
-valores de la amplitud en función de la frecuencia del movimiento forzado para diferentes
-constantes de amortiguamiento y se obtuvo la frecuencia natural del oscilador.
+Para desarrollar esta práctica de laboratorio se plantean dow fases
+metodológicas. En la primera fase se midió y estudió el fenómeno de
+resonancia en el circuito RLC, en la segunda fase se tomaron mediciones de
+voltaje y corriente sobre los elementos RLC para diferentes frecuencias.
 \subsection{Materiales}
 \begin{enumerate}
-    \item Péndulo de Pohl.
-    \item Fuente de alimentación.
-    \item Fuente plug-in para el péndulo de torsión.
-    \item Amperímetro.
-    \item Voltímetro.
-    \item Cables de conexión.
-    \item Cronómetro.
+    \item Osciloscopio.
+    \item Fuente de alimentación de voltaje.
+    \item Dispositivo de capacitancia.
+    \item Dispositivo de reactancia.
+    \item Dispositivo de resistencia.
+    \item Multímetro.
 \end{enumerate}
 \subsection{Fase 1} \label{M.F1}
-En esta primera fase se determinó la amplitud del movimiento amortiguado
-en función del tiempo. Para esto, se aplicó una corriente continua a las bobinas para
-generar la fuerza que amortigua las oscilaciones en el péndulo de Pohl (a mayor corriente
-mayor amortiguamiento). Luego, se desplazó el indicador del péndulo hasta una posición límite y se registraron las
-amplitudes sucesivas del péndulo (positivas y negativas) correspondientes a
-la corriente utilizada. Finalmente, se repitió el procedimiento anterior para otra corriente
-y se registraron los datos.
+Se ubicó el inductor, condensador y una resistencia en serie, luego se alimentó el circuito con una fuente de voltaje constante
+$V$ y frecuencia variable $\omega$.\par
+\bigskip
+En esta primera parte se determinó la frecuencia de resonancia de todo el circuito. Primero se realizó el cálculo teórico haciendo uso de la ecuación \eqref{eq:frequency}.
+Posteriormente se colocó un valor de voltaje en el circuito y se seleccionó el
+valor de frecuencia de resonancia hallado teóricamente. Para comprobar que
+este era el valor experimental de la frecuencia de resonancia, se midió el
+voltaje en cada uno de los elementos con ayuda del voltímetro.\par 
+\bigskip
+Al realizar las
+mediciones, el voltaje presentó un valor máximo cuando el valor del
+voltaje del capacitor y el inductor eran iguales. Además el valor de la corriente
+era máxima comparada con la medición en otro valor diferente a la
+frecuencia de resonancia. Sin embargo, para el valor calculado el sistema no
+estaba en resonancia, así que fue necesario ajustar con la perrilla el valor de frecuencia que hace que el
+sistema alcanzara esta condición.
 \subsection{Fase 2} \label{M.F2}
-En ésta fase se determinó el período del movimiento amortiguado. Para esto,
-se ajustó en las bobinas la primera corriente utilizada en la fase anterior \ref{M.F1}. Luego, se
-separó el péndulo hasta una amplitud inicial límite y se midió el tiempo de 3
-oscilaciones tres veces. Posteriormente, se obtuvo el tiempo promedio y el período promedio
-del movimiento. Por último, se repitió el procedimiento anterior con la segunda
-corriente y se registraron los datos.
-\subsection{Fase 3} \label{M.F3}
-En esta fase se observó el comportamiento de la amplitud en los
-movimientos críticamente amortiguado y sobreamortiguado. Aquí fue necesario ajustar el
-valor de la corriente aumentándola hasta obtener un movimiento críticamente amortiguado. Luego, se determinó el tiempo que tarda el péndulo desde que se libera hasta que alcanza la posición de
-equilibrio. Después, se siguieron aumentando los valores
-de la corriente hasta alcanzar un amortiguamiento que generó un movimiento sobre
-amortiguado. Posteriormente, se midió el tiempo que tarda el péndulo en realizar el movimiento
-hasta alcanzar la posición de equilibrio. Por último, se registrarán los valores de corriente
-y tiempo para cada movimiento.
-\subsection{Fase 4}
-En esta fase se estudió la respuesta forzada del péndulo de Pohl. El procedimiento realizado fue:
-\begin{enumerate}
-    \item Se determinó el valor de la amplitud del
-péndulo para una corriente de $0A$ a una frecuencia $f$ 
-    \item Se realizó el mismo procedimiento anterior variando las frecuencias aumentando de cinco en cinco los valores de la perilla tal como lo indicó la docente, fue importante tener en cuenta que para determinar el valor de la frecuencia fue necesario tomar el tiempo de 5 revoluciones del motor. 
-    \item Se repitieron los pasos anteriores ajustando las dos corrientes utilizadas en la fase \ref{M.F1} para generar el movimiento forzado-amortiguado,
-registrando nuevamente los datos de las amplitudes.
-\end{enumerate}
-Por último, se determinó cualitativamente la relación de fase entre el excitador y el
-oscilador para cada frecuencia ajustada. Finalmente, se encontró la frecuencia natural
-de oscilación del péndulo de Pohl, registrando el tiempo de las oscilaciones sin corriente y
-sin fuerza externa.
-\newpage
-\section{Fase 5}
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10.0cm]{images/amplitud-vs-tiempo.png}
-    \caption{\textit{Amplitud en función del tiempo para un movimiento sub-amortiguado.}}
-    \label{fig:2}
-\end{figure}
-
-Se establecieron las funciones de la amplitud para el movimiento
-débilmente amortiguado y para el movimiento forzado. Para esto, se realizó un análisis
-de la gráfica de amplitud, $A(t)$ contra tiempo $t$ para las dos
-corrientes utilizadas en el movimiento amortiguado. Posteriormente, sobre los puntos
-experimentales se realizó un ajuste exponencial de la forma: $A_0e^{-\gamma t}$. (Fig. \ref{fig:2})
-\newpage
+Una vez hallado el valor experimental de la frecuencia de Resonancia,
+ahora se estudió la variación del voltaje en cada elemento del circuito y la
+corriente, para esto fue preciso cambiar la frecuencia de la fuente AC. Se probaron valores
+por debajo y por encima del valor de frecuencia de resonancia calculado para la
+fase anterior. Para cada valor de frecuencia, se registraron, los voltajes sobre la resistencia, el capacitor y el inductor y la corriente del circuito.\par 
+\bigskip
+Para estudiar la
+dependencia de la impedancia $Z$ con $\omega$ , se empleó la ecuación \eqref{eq:impedance}, primero se determinaron
+los valores teóricos de $X_L$ , $X_C$ y se halló $Z$. Posteriormente se determinaron los valores
+experimentales de $X_L$ , $X_C$ y $Z$, usando los valores de voltajes y corriente
+medidos. También se comparó el valor de $Z$ teórico y experimental y se estudió su
+comportamiento con la frecuencia $\omega$.
 \section{Tratamiento de datos} \label{TD}
 \subsection{Análisis de oscilaciones amortiguadas}
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{|m{2cm}|m{2cm}|m{2cm}|m{2cm}|m{2cm}|m{2cm}|}
-        \hline
-        \multicolumn{2}{|c|}{I=0 $[A]$} & \multicolumn{2}{|c|}{I=0.15 $[A]$} & \multicolumn{2}{|c|}{I=0.30 $[A]$}\\
-        \hline \hline
-        Amplitudes positivas&Amplitudes Negativas&  Amplitudes positivas& Amplitudes Negativas& Amplitudes positivas& Amplitudes Negativas\\
-        \hline
-        $15.0$ & $13.5$ & $20.0$ & $18.15$ & $20.0$ & $18.3$\\
-        $14.6$ & $13.2$ & $16.5$ & $17.5$ & $16.2$ & $13.9$\\
-        $14.1$ & $13.0$ & $15.3$ & $16.3$ & $13.1$ & $11.0$\\
-        $13.9$ & $12.7$ & $14.2$ & $15.1$ & $10.9$ & $9.0$\\
-        $13.2$ & $12.3$ & $13.2$ & $14.0$ & $8.7$ & $7.5$\\
-        $13.1$ & $12.2$ & $12.5$ & $12.9$ & $6.8$ & $6.1$\\
-        $13.0$ & $11.9$ & $11.4$ & $11.9$ & $5.2$ & $5.0$\\
-        $12.8$ & $11.8$ & $10.8$ & $11.0$ & $4.2$ & $4.1$\\ 
-        $12.5$ & $11.3$ & $10.1$ & $10.2$ & $3.4$ & $3.2$\\ 
-        $12.2$ & $11.2$ & $9.3$ & $9.4$ & $2.8$ & $2.6$\\ 
-        $12.0$ & $11.0$ & $8.8$ & $9.0$ & $2.1$ & $2.0$\\ 
-        $11.3$ & $10.9$ & $8.1$ & $8.3$ & $1.8$ & $1.5$\\ 
-        $11.2$ & $10.6$ & $7.2$ & $7.4$ & $1.2$ & $1.1$\\
-        \hline
-    \end{tabular}
-    \caption{\textit{Amplitudes registradas para diferentes corrientes}}
-    \label{Table 1}
-\end{table}
-El registro de las amplitudes máximas para las diferentes oscilaciones (Cdr. \ref{Table 1}) permite observar el fenómeno a diferentes corrientes que amortiguan el movimiento.
-\subsection{Periodo del movimiento amortiguado}
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|c|}
-        \hline
-        \textbf{Amplitud} & $t_1 \ [s]$ & $t_2 \ [s]$ & $t_3\ [s]$ & $t_{prom}\ [s]$ & $T_{prom}\ [s]$ & $f_0\ [1/s]$\\
-        \hline\hline
-        $15$ & $5.79$ & $5.90$ & $6.16$ & $5.95$ & $1.186$ & $0.84$\\
-        $13$ & $5.82$ & $5.86$ & $5.85$ & $5.84$ & $1.16$ & $0.85$\\
-        \hline
-    \end{tabular}
-    \caption{\textit{Datos recolectados: tiempo para 5 oscilaciones y corriente de $I=0\ [A]$}}
-    \label{Table 2}
-\end{table}
-Mediante los datos registrados de la oscilación sin ninguna corriente (Cdr. \ref{Table 2}) se dedujo un periodo $T=1.168\ s$ y una frecuencia de $0.8559\ [Hz]$.
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|}
-        \hline
-        \textbf{Amplitud} & $t_1 \ [s]$ & $t_2 \ [s]$ & $t_3\ [s]$ & $t_{prom}\ [s]$ & $T_{prom}\ [s]$\\
-        \hline\hline
-        $20$ & $5.80$ & $5.52$ & $5.67$ & $5.66$ & $1.132$\\
-        $16$ & $6.10$ & $5.66$ & $5.78$ & $5.84$ & $1.168$\\
-        $12$ & $5.92$ & $5.48$ & $5.46$ & $5.62$ & $1.122$\\
-        \hline
-    \end{tabular}
-    \caption{\textit{Datos recolectados: tiempo para 5 oscilaciones y corriente de $I=0.4\ [A]$}}
-    \label{Table 3}
-\end{table}
-Para el segundo caso, con una corriente de $0.4\ A$ se estimó un periodo de $T=1.140\ [s]$. (Cdr. \ref{Table 3})
-\newpage
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|c|}
-        \hline
-        \textbf{Amplitud} & $t_1 \ [s]$ & $t_2 \ [s]$ & $t_3\ [s]$ & $t_{prom}\ [s]$ & $T_{prom}\ [s]$\\
-        \hline\hline
-        $20$ & $5.48$ & $5.54$ & $5.44$ & $5.48$ & $1.096$\\
-        $16$ & $5.31$ & $5.46$ & $5.59$ & $5.45$ & $1.090$\\
-        $12$ & $5.65$ & $5.49$ & $5.52$ & $5.55$ & $1.110$\\
-        \hline
-    \end{tabular}
-    \caption{\textit{Datos recolectados: tiempo para 5 oscilaciones y corriente de $I=0.8\ [A]$}}
-    \label{Table 4}
-\end{table}
-En la tercera toma, con una corriente de $0.8\ A$ se obtiene un periodo $T=1.098\ s$. (Cdr. \ref{Table 4})
-\subsection{Movimientos críticamente amortiguados y sub-amortiguados}
-Para determinar el coeficiente de amortiguamiento se hizo uso de la ecuación \eqref{eq:amorti} donde $\gamma$ es la constante de amortiguamiento.
-\begin{equation}\label{eq:amorti}
-    \log{\delta}=\ln{\frac{x(t)}{x(t+T)}}=\gamma T
-\end{equation}
-Para la primera parte, sin corriente, $T=1.787\ s$, mientras que $x(0)=15$ y $x(T)=14.6$, por lo que reemplazando en la ecuación \eqref{eq:amorti}:
-\begin{align*}
-    \ln{\frac{15}{14.6}}&=1.168\gamma\\
-    \gamma&=0.023
-\end{align*}
-Para calcular la frecuencia angular $\omega$ simplemente reemplazamos el periodo $T$:
-\begin{align*}
-    \omega&=\frac{2\pi}{T}\\
-    \omega&=5.379\ [rad/s]
-\end{align*}
-Al aplicar el mismo proceso con los otros casos se tiene que:
-\begin{enumerate}
-    \item Para la corriente $I_2=0.4\ A$ se tiene un $\gamma=0.092$ y un $\omega=5.511\ [rad/s]$
-    \item Para la corriente $I_2=0.8\ A$ se tiene un $\gamma=0.184$ y un $\omega=5.722\ [rad/s]$
-\end{enumerate}
-\subsection{Análisis gráfico de los resultados}
-Por último, es importante observar el comportamiento para las diferentes situaciones propuestas, el análisis gráfico fue facilitado gracias a los datos que retornó el software CASSY-lab.
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{images/no-current.png}
-    \caption{\textit{Representación de la amplitud en función del tiempo para un sistema sin corriente}}
-    \label{fig:no-current}
-\end{figure}
-En el caso de la corriente nula se evidencia que el coeficiente de amortiguamiento es muy bajo. (Fig. \ref{fig:no-current})
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{images/04-current.png}
-    \caption{\textit{Representación de la amplitud en función del tiempo para un sistema con corriente $I=0.4\ A$}}
-    \label{fig:04-current}
-\end{figure}
-Por su parte, cuando se aplica una corriente de $0.4\ A$ se observa un decaimiento en la amplitud notablemente mayor. (Fig. \ref{fig:04-current})
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=10cm]{images/08-current.jpg}
-    \caption{\textit{Representación de la amplitud en función del tiempo para un sistema con corriente $I=0.8\ A$}}
-    \label{fig:08-current}
-\end{figure}
-Mientras que para una corriente de $0.8\ A$ el movimiento se acerca rápidamente a mantenerse estable con valores de amplitud cercanos a $0$. (\ref{fig:08-current})\par
-\newpage
-También es posible analizar los datos de forma tabulada para las distintas configuraciones de corriente. (Cdr. \ref{tab:all-currents})
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
-        \hline
-        \textbf{Posición dial} & $f \ [Hz]$ & \multicolumn{3}{|c|}{\textbf{Amplitud}}\\
-        \hline
-        \multicolumn{2}{|c|}{} & $I=0\ A$ & $I=0.4\ A$ & $I=0.8\ A$\\
-        \hline\hline
-        $5$ & $0.128$ & $0.5$ & $0.45$ & $0.40$\\
-        $10$ & $0.224$ & $0.5$ & $0.5$ & $0.40$\\
-        $15$ & $0.353$ & $0.5$ & $0.7$ & $0.55$\\
-        $20$ & $0.465$ & $0.7$ & $1.3$ & $0.75$\\
-        $25$ & $0.513$ & $1.6$ & $2.3$ & $0.6$\\
-        $30$ & $0.697$ & $20$ & $0.55$ & $0.35$\\
-        $35$ & $0.733$ & $14.6$ & $0.35$ & $0.2$\\
-        $40$ & $0.957$ & $0.6$ & $0.2$ & $0.2$\\
-        $45$ & $1.057$ & $0.35$ & $0.1$ & $0.1$\\
-        $50$ & $1.193$ & $0.05$ & $0.1$ & $0.05$\\
-        \hline
-    \end{tabular}
-    \caption{\textit{Datos recolectados: tiempo para 5 oscilaciones y corriente de $I=0.8\ [A]$}}
-    \label{tab:all-currents}
-\end{table}
 \section{Análisis de resultados}
-La toma de datos fue parte fundamental del proceso de investigación y para la comparación con los resultados esperados con los obtenidos. Inicialmente se tomaron unas amplitudes positivas y negativas con diferentes coeficientes de amortiguamiento, las cuales dieron cifras aproximadas a lo que se
-esperaba como equipo de trabajo, posteriormente se midió la frecuencia del motor, siendo que los resultados de las amplitudes con diferentes corrientes de frenados, no fuesen muy diferentes entre sí.
 \section{Conclusiones}
-Cerrando el proceso de experimentación e investigación se puede decir que se cumplieron con los objetivos propuestos, principalmente con el entender como funciona un movimiento armónico amortiguado forzado y como varía en función del coeficiente de amortiguamiento o la corriente de frenado en este caso. Tambien se concluyó que la frecuencia del motor es mayor en cuanto se aumenta la posición del dial, y teniendo un dato extra de que cuando se encuentra aproximadamente en 25 la posición del dial, el movimiento se encuentra en resonancia.
 \section{Referencias} 
 \bibliographystyle{unsrt}
 \bibliography{../general-references/references}
