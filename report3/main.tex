@@ -241,6 +241,90 @@ Mediante los datos registrados de la oscilación sin ninguna corriente (Cdr. \re
     \label{Table 3}
 \end{table}
 Para el segundo caso, con una corriente de $0.4\ A$ se estimó un periodo de $T=1.140\ [s]$. (Cdr. \ref{Table 3})
+\newpage
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{Amplitud} & $t_1 \ [s]$ & $t_2 \ [s]$ & $t_3\ [s]$ & $t_{prom}\ [s]$ & $T_{prom}\ [s]$\\
+        \hline\hline
+        $20$ & $5.48$ & $5.54$ & $5.44$ & $5.48$ & $1.096$\\
+        $16$ & $5.31$ & $5.46$ & $5.59$ & $5.45$ & $1.090$\\
+        $12$ & $5.65$ & $5.49$ & $5.52$ & $5.55$ & $1.110$\\
+        \hline
+    \end{tabular}
+    \caption{\textit{Datos recolectados: tiempo para 5 oscilaciones y corriente de $I=0.8\ [A]$}}
+    \label{Table 4}
+\end{table}
+En la tercera toma, con una corriente de $0.8\ A$ se obtiene un periodo $T=1.098\ s$. (Cdr. \ref{Table 4})
+\subsection{Movimientos críticamente amortiguados y sub-amortiguados}
+Para determinar el coeficiente de amortiguamiento se hizo uso de la ecuación \eqref{eq:amorti} donde $\gamma$ es la constante de amortiguamiento.
+\begin{equation}\label{eq:amorti}
+    \log{\delta}=\ln{\frac{x(t)}{x(t+T)}}=\gamma T
+\end{equation}
+Para la primera parte, sin corriente, $T=1.787\ s$, mientras que $x(0)=15$ y $x(T)=14.6$, por lo que reemplazando en la ecuación \eqref{eq:amorti}:
+\begin{align*}
+    \ln{\frac{15}{14.6}}&=1.168\gamma\\
+    \gamma&=0.023
+\end{align*}
+Para calcular la frecuencia angular $\omega$ simplemente reemplazamos el periodo $T$:
+\begin{align*}
+    \omega&=\frac{2\pi}{T}\\
+    \omega&=5.379\ [rad/s]
+\end{align*}
+Al aplicar el mismo proceso con los otros casos se tiene que:
+\begin{enumerate}
+    \item Para la corriente $I_2=0.4\ A$ se tiene un $\gamma=0.092$ y un $\omega=5.511\ [rad/s]$
+    \item Para la corriente $I_2=0.8\ A$ se tiene un $\gamma=0.184$ y un $\omega=5.722\ [rad/s]$
+\end{enumerate}
+\subsection{Análisis gráfico de los resultados}
+Por último, es importante observar el comportamiento para las diferentes situaciones propuestas, el análisis gráfico fue facilitado gracias a los datos que retornó el software CASSY-lab.
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{images/no-current.png}
+    \caption{\textit{Representación de la amplitud en función del tiempo para un sistema sin corriente}}
+    \label{fig:no-current}
+\end{figure}
+En el caso de la corriente nula se evidencia que el coeficiente de amortiguamiento es muy bajo. (Fig. \ref{fig:no-current})
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{images/04-current.png}
+    \caption{\textit{Representación de la amplitud en función del tiempo para un sistema con corriente $I=0.4\ A$}}
+    \label{fig:04-current}
+\end{figure}
+Por su parte, cuando se aplica una corriente de $0.4\ A$ se observa un decaimiento en la amplitud notablemente mayor. (Fig. \ref{fig:04-current})
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{images/08-current.jpg}
+    \caption{\textit{Representación de la amplitud en función del tiempo para un sistema con corriente $I=0.8\ A$}}
+    \label{fig:08-current}
+\end{figure}
+Mientras que para una corriente de $0.8\ A$ el movimiento se acerca rápidamente a mantenerse estable con valores de amplitud cercanos a $0$. (\ref{fig:08-current})\par
+\newpage
+También es posible analizar los datos de forma tabulada para las distintas configuraciones de corriente. (Cdr. \ref{tab:all-currents})
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Posición dial} & $f \ [Hz]$ & \multicolumn{3}{|c|}{\textbf{Amplitud}}\\
+        \hline
+        \multicolumn{2}{|c|}{} & $I=0\ A$ & $I=0.4\ A$ & $I=0.8\ A$\\
+        \hline\hline
+        $5$ & $0.128$ & $0.5$ & $0.45$ & $0.40$\\
+        $10$ & $0.224$ & $0.5$ & $0.5$ & $0.40$\\
+        $15$ & $0.353$ & $0.5$ & $0.7$ & $0.55$\\
+        $20$ & $0.465$ & $0.7$ & $1.3$ & $0.75$\\
+        $25$ & $0.513$ & $1.6$ & $2.3$ & $0.6$\\
+        $30$ & $0.697$ & $20$ & $0.55$ & $0.35$\\
+        $35$ & $0.733$ & $14.6$ & $0.35$ & $0.2$\\
+        $40$ & $0.957$ & $0.6$ & $0.2$ & $0.2$\\
+        $45$ & $1.057$ & $0.35$ & $0.1$ & $0.1$\\
+        $50$ & $1.193$ & $0.05$ & $0.1$ & $0.05$\\
+        \hline
+    \end{tabular}
+    \caption{\textit{Datos recolectados: tiempo para 5 oscilaciones y corriente de $I=0.8\ [A]$}}
+    \label{tab:all-currents}
+\end{table}
 \section{Análisis de resultados}
 La toma de datos fue parte fundamental del proceso de investigación y para la comparación con los resultados esperados con los obtenidos. Inicialmente se tomaron unas amplitudes positivas y negativas con diferentes coeficientes de amortiguamiento, las cuales dieron cifras aproximadas a lo que se
 esperaba como equipo de trabajo, posteriormente se midió la frecuencia del motor, siendo que los resultados de las amplitudes con diferentes corrientes de frenados, no fuesen muy diferentes entre sí.
