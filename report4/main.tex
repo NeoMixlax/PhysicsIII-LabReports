@@ -15,7 +15,6 @@
 \usepackage{gensymb}
 \usepackage{array}
 \usepackage{pgfplots}
-\usepackage{lipsum}
 \usepackage{circuitikz}
 \usepackage{tikz}
 
@@ -24,7 +23,7 @@
 
 \pagestyle{fancy}
 \chead{\bfseries Informe 4 - Grupo C1B. Subgrupo 2} 
-\rhead{20 de Mayo de 2023}
+\rhead{1 de Junio de 2023}
 \cfoot{Universidad Industrial de Santander} 
 \rfoot{\thepage} 
 
@@ -44,7 +43,7 @@
 \newpage
 
 \section{Resumen}
-\lipsum[1]
+El siguiente laboratorio se desarrolla con la finalidad de aplicar los conocimientos en el tema de circuitos RLC, conociendo su comportamiento y capacidad a través de un multímetro, osciloscopio, una fuente de voltaje, dispositivo para establecer el valor de capacitancia, inductancia y resistencia. En donde se busca analizar experimentalmente la frecuencia de resonancia por medio del osciloscopio y hacer una comparación con la obtenida teóricamente. También se desea analizar el voltaje en la resistencia, la inductancia y la capacitancia bajo diferentes frecuencias incluyendo la de resonancia, así mismo, calcular el valor de impedancia para las diferentes frecuencias. Por medio de estos datos se entra en comparación con los teóricos para obtener un porcentaje de error entre ellos.
 \section{Introducción}
 Los circuitos eléctricos representan un eje fundamental en la sociedad actual. Aquellos de tipo RLC son alimentados por una
 fuente AC de voltaje constante $V$ y frecuencia variable $\omega$ , la corriente que
@@ -145,7 +144,6 @@ Donde $I_m$ es la magnitud del fasor $\vec{I_m}$. El voltaje a través de todos 
 \begin{figure}[ht]
     \centering
     \begin{circuitikz}
-        % Circuit
         \draw[line width=0.8]
         (2,7) to [sinusoidal voltage source, l_=$V_S$, i=$I$] (2,1)
         (2,7) to [resistor, l_=$R$] ++(6,0) to [inductor, l_=$L$] ++(0,-6) to [capacitor, l_=$C$] +(-6,0) ;
@@ -212,7 +210,7 @@ $i$ se atrasa con respecto al voltaje $V_L$ por $\frac{\pi}{2}\ rad$ más que lo
         \draw[->,thick,black] (0,0) -- (vec6);
         \draw[->,thick,black] (0,0) -- (vec7);
 
-        \draw [thick] (1.0,0) arc (0:30:1cm)    node [midway, right] {$\omega t-\theta$};
+        \draw [thick] (1.0,0) arc (0:30:1cm) node [midway, right] {$\omega t-\theta$};
         % Grid
         %\draw[help lines] (-3,-3) grid (3,3);
     \end{tikzpicture}
@@ -302,9 +300,89 @@ experimentales de $X_L$ , $X_C$ y $Z$, usando los valores de voltajes y corrient
 medidos. También se comparó el valor de $Z$ teórico y experimental y se estudió su
 comportamiento con la frecuencia $\omega$.
 \section{Tratamiento de datos} \label{TD}
-\subsection{Análisis de oscilaciones amortiguadas}
+\subsection{Primera parte}
+Se tomaron los datos de resistencia, inductancia y capacitancia, para calcular la frecuencia de resonancia teórica a partir de estos datos. (Cdr. \ref{tab:rlc})\par
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        $R\ [\ohm]$ & $L\ [mH]$ & $C\ [\mu F]$ & $F_{\text{resonancia}}\ [Hz]$ & $V_R\ [V]$ & $V_L\ [V]$ & $V_C\ [V]$ \\
+        \hline\hline
+        $10$ & $17$ & $10$ & $386.007$ & $1.44$ & $6.45$ & $6.47$\\
+        $100$ & $4$ & $1$ & $2516.46$ & $5.04$ & $3.54$ & $3.57$\\
+        $230$ & $4$ & $1$ & $2516.46$ & $5.75$ & $166$ & $1.66$\\
+        \hline
+    \end{tabular}
+    \caption{\textit{Voltajes medidos para diferentes valores de $R$, $L$ y $C$. Frecuencia de resonancia teórica.}}
+    \label{tab:rlc}
+\end{table}
+La frecuencia teórica fue encontrada a partir de su fórmula \eqref{eq:frequency}. A continuación se contrastan los valores teóricos con los experimentales (Cdr. \ref{tab:frequ}) a la vez que se calcula el porcentaje de error \eqref{eq:error}.\par
+\begin{equation}\label{eq:error}
+    \text{\% error}=\frac{F_{\text{teórica}}-F_{\text{experimental}}}{F_{\text{teórica}}}\times100\%
+\end{equation}
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        $F_{\text{teórica}}$ & $F_{\text{experimental}}$ & \% error\\
+        \hline\hline
+        $386.007$ & $305.2$ & $20\%$\\
+        $2516.46$ & $2517$ & $0.02\%$\\
+        $2516.46$ & $2464$ & $2\%$\\
+        \hline
+    \end{tabular}
+    \caption{\textit{Porcentajes de error de las frecuencias obtenidas.}}
+    \label{tab:frequ}
+\end{table}
+\subsection{Segunda parte}
+De la tabla para la que se toman datos con diferentes frecencias (Cdr. \ref{tab:var-freq}) se puede observar que al acercarse la frecuencia en el circuito RLC la amplitud aumenta y el dicho circuito entra en resonancia. Además, al realizar la toma de datos se comprobó dicha frecuencia tanto
+experimental como teóricamente, asumiendo que el voltaje en la inductancia y la capacitancia son casi iguales o tienen valores muy cercanos, es así que lo evidenciamos en el porcentaje de error de dichas frecuencias, este valor se puede llegar a presentar debido a errores en la toma de datos o
+calibración de los equipos del laboratorio.\par
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        $f\ [Hz]$ & $V_R\ [V]$ & $V_I\ [V]$ & $V_C\ [V]$ & $I_{exp}\ A$ & $P_{exp}\ [W]$ & $Z_{exp}$\\
+        \hline\hline
+        $1604$ & $5.83$ & $2.53$ & $1.15$ & $0.0252$ & $0.146916$ & $5.9911$\\
+        $1799$ & $5.87$ & $2.25$ & $1.22$ & $0.0254$ & $0.149098$ & $5.9596$\\
+        $2024$ & $5.81$ & $1.97$ & $1.38$ & $0.0252$ & $0.146410$ & $5.9399$\\
+        $2273$ & $5.78$ & $1.72$ & $1.52$ & $0.0255$ & $0.147390$ & $5.7835$\\
+        $2490$ & $5.61$ & $1.51$ & $1.64$ & $0.0249$ & $0.139690$ & $5.6115$\\
+        $2698$ & $5.61$ & $1.37$ & $1.76$ & $0.0250$ & $0.140250$ & $5.6235$\\
+        $1799$ & $5.57$ & $1.23$ & $1.86$ & $0.0250$ & $0.139250$ & $5.6055$\\
+        $1799$ & $5.54$ & $1.15$ & $1.94$ & $0.0253$ & $0.140160$ & $5.5960$\\
+        $1799$ & $5.50$ & $1.07$ & $1.04$ & $0.0253$ & $0.139150$ & $5.5849$\\
+        \hline
+    \end{tabular}
+    \caption{\textit{Valores para distintas frecuencias del circuito RLC.}}
+    \label{tab:var-freq}
+\end{table}
+A continuación se presenta una gráfica que ilustra el comportamiento de los voltajes en el capacitor y en el inductor a medida que cambia la frecuencia. (Fig. \ref{fig:voltages-vs-freq})\par
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{images/capacitor-vs-inductor-voltages.jpg}
+    \caption{\textit{Voltajes de capacitor e inductor vs frecuencia.}}
+    \label{fig:voltages-vs-freq}
+\end{figure}
+Por otra parte, también se ilustran las gráficas que representan el cambio en el voltaje de la resistencia (Fig. \ref{fig:voltage-r-vs-freq}) así como el cambio de la corriente en el circuito (Fig. \ref{fig:current-vs-freq}).\par
+\newpage
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{images/resistor-voltage.jpg}
+    \caption{\textit{Voltajes de resistor vs frecuencia.}}
+    \label{fig:voltage-r-vs-freq}
+\end{figure}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=10cm]{images/current.jpg}
+    \caption{\textit{Corriente vs frecuencia.}}
+    \label{fig:current-vs-freq}
+\end{figure}
 \section{Análisis de resultados}
+La parte analítica y comprensiva de este laboratorio fue fundamental para su desarrollo, se llevaron a cabo varias mediciones para obtener los respectivos datos de resistencia, inductancia y capacitancia para calcular una frecuencia de resonancia teórica con dichos datos, esto se hizo con las formulas señaladas en el tratamiento de datos, en respuesta al uso de estas fórmulas se obtuvieron datos que se compararían con su contraparte experimental, siendo que en la primera parte hubo un porcentaje de error muy bajo, y se podría decir que despreciable, más sin embargo existente, que se pueden presentar debido a errores en la toma de datos o en la calibración de los equipos de laboratorio, por otra parte se comprobó que al aumentar la frecuencia del circuito RLC, la intensidad aumenta y el circuito entra en resonancia.
 \section{Conclusiones}
+Cerrando con el proceso de experimentación, toma de datos y análisis de estos mismos, se puede decir que se cumplieron los objetivos propuestos al inicio de dicho laboratorio, como parte principal para el entendimiento de cómo funciona un circuido RLC en función de la frecuencia, y al cambiar valores de resistencia, inductancia y capacitancia, tambien se halló de manera satisfactorio cuando el circuito RLC, se encuentra en resonancia.
 \section{Referencias} 
 \bibliographystyle{unsrt}
 \bibliography{../general-references/references}
