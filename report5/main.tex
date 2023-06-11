@@ -1,0 +1,260 @@
+\documentclass[spanish,notitlepage,letterpaper, 12pt]{article} 
+\usepackage[spanish]{babel} 
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}      
+\geometry{letterpaper}                  
+\usepackage{epstopdf}
+\usepackage{fancyhdr} % Paquete para encabezados y pies de pag
+\usepackage{color}
+\usepackage{placeins}
+\usepackage{csquotes}
+\usepackage{textcomp}
+\usepackage{gensymb} 
+\usepackage{tikz}
+
+\graphicspath{images/}
+
+\pagestyle{fancy} 
+\chead{\bfseries Informe 5 - Grupo C1B. Subgrupo 2} 
+\rhead{10 de Junio de 2023}
+\cfoot{Universidad Industrial de Santander} 
+\rfoot{\thepage} 
+
+\voffset = -0.25in 
+\textheight = 8.0in 
+\textwidth = 6.5in
+\oddsidemargin = 0.in
+\headheight = 20pt 
+\headwidth = 6.5in
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0,5pt}
+\begin{document}
+\input{title-page}
+\tableofcontents
+
+\newpage
+
+\section{Resumen}
+El sonido y la luz son ejemplos de ondas aparentemente muy distintas, pero con
+muchas características en común. Por ejemplo, ambas se propagan en tres dimensiones y
+tienen propiedades como la reflexión y la refracción. Las ondas ultrasónicas son ondas
+mecánicas de frecuencias mayores a 20 KHz que pueden propagarse prácticamente en
+cualquier material e incluso el organismo, sin lesionar los tejidos. Esto ha hecho posible la
+aplicación de las ondas ultrasónicas en áreas como la medicina, en la formación de
+imágenes diagnósticas, en el campo industrial, entre otros. Estas ondas pueden ser generadas
+gracias al efecto piezoeléctrico al someter un cristal a un campo eléctrico, produciendo
+vibraciones mecánicas de cierta frecuencia que se convierten en la onda de ultrasonido.\par
+\bigskip
+Otra de las aplicaciones interesantes del sonido y el ultrasonido es la determinación de una
+distancia, por ejemplo, entre el fondo del lecho submarino y una embarcación usando el
+principio de la ecosonda. Este principio usa una velocidad del sonido conocida donde el
+tiempo que invierte la onda desde que es emitida hasta que es recibida en el mismo punto
+de emisión, permite determinar la distancia entre el emisor y la superficie de reflexión de la
+onda.\par
+\bigskip
+En el presente proyecto se estudió el fenómeno de la reflexión en las ondas ultrasónicas
+con el fin de comprobar esta ley. Por otra parte, con la ayuda del principio de la ecosonda
+se determinó la velocidad de la onda ultrasónica.
+\section{Introducción}
+En este proyecto de investigación se busca estudiar la generación, propagación y
+reflexión de las ondas mecánicas de frecuencia de 40 KHz, conocidas como ondas
+ultrasónicas. Por otra parte, se estudió el principio de ecosonda y a partir de las distancias
+entre el emisor-receptor y el obstáculo, se determinó la velocidad del sonido. Esto genera
+la pregunta: En el fenómeno de la reflexión de la onda ultrasónica, ¿Cómo es la relación entre el ángulo de incidencia y el ángulo de reflexión? ¿A partir del principio de ecosonda
+es posible encontrar el valor de la velocidad del sonido y las distancias entre el emisor y el
+obstáculo que genera la reflexión de la onda?
+\subsection{Marco teórico} \label{I.MT}
+Los materiales piezoeléctricos pueden convertir una tensión mecánica en una señal
+eléctrica y una señal eléctrica en vibraciones mecánicas. Por ejemplo, cuando un cristal de
+cuarzo se somete a una presión fuerte, el orden de los átomos que lo componen se altera
+ligeramente, generando una diferencia de potencial. Por el contrario, el cristal en presencia
+de un campo eléctrico oscilante puede alterar su forma, generando de esta manera
+vibraciones mecánicas que al coincidir con la frecuencia natural del cristal, serán de notable
+amplitud como consecuencia del fenómeno de resonancia.\par
+\bigskip
+Se usan dos transductores de
+ultrasonido de aproximadamente $40\ KHz$, uno receptor y el otro emisor. El emisor se
+considera como una fuente ultrasónica puntual y se coloca en el punto focal de un reflector cóncavo con el fin de formar una onda plana. Cuando una onda plana se propaga en un
+medio (aire) e incide en una superficie que divide dos medios, se forma una onda plana
+reflejada. Se puede determinar experimentalmente que los frentes de onda reflejados
+forman el mismo ángulo con la superficie que los frentes de onda incidentes. El rayo
+incidente y la normal a la superficie forman el plano de incidencia. La ley de la reflexión
+describe la relación entre esos ángulos: \textit{El rayo reflejado está en el plano de incidencia. El
+ángulo de incidencia es igual al ángulo de reflexión.}\par
+\shorthandoff{>}
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}%[scale=1.5, transform shape]
+        \coordinate (hp) at (0,0);
+
+        %Reflecting screen
+        \draw [very thick] (0,2.5) -- (0,-2.5);
+
+        %Direction of the sound
+        \draw [->,thick] (-3,2) -- (hp);
+        \draw [->,thick] (hp) -- (-3,-2);
+
+        %Sound waves
+        %Incident
+
+        %first
+        \draw (-2.6,1.73) arc [start angle=-33.69, end angle=-20, radius=1];
+        \draw (-2.6,1.73) arc [start angle=-33.69, end angle=-47.38, radius=1];
+        %second
+        \draw (-2.5,1.66) arc [start angle=-33.69, end angle=-15, radius=1];
+        \draw (-2.5,1.66) arc [start angle=-33.69, end angle=-52.38, radius=1];
+        %third
+        \draw (-2.4,1.6) arc [start angle=-33.69, end angle=-10, radius=1];
+        \draw (-2.4,1.6) arc [start angle=-33.69, end angle=-57.38, radius=1];
+
+        %Reflected
+
+        %third
+        \draw (-2.6,-1.73) arc [start angle=213.69, end angle=190, radius=1];
+        \draw (-2.6,-1.73) arc [start angle=213.69, end angle=237.38, radius=1];
+        %second
+        \draw (-2.5,-1.66) arc [start angle=213.69, end angle=195, radius=1];
+        \draw (-2.5,-1.66) arc [start angle=213.69, end angle=232.38, radius=1];
+        %first
+        \draw (-2.4,-1.6) arc [start angle=213.69, end angle=200, radius=1];
+        \draw (-2.4,-1.6) arc [start angle=213.69, end angle=227.38, radius=1];
+
+        %Dashed line to distinguish the angles
+        \draw [dashed] (-2.5,0) -- (2.5,0);
+
+        %Angles themselves
+        \draw [red] (-1,0) arc [start angle=180, end angle=146.3099, radius=1];
+        \draw [blue] (-1,0) arc [start angle=180, end angle=213.69, radius=1];
+
+        %Labels
+        \draw [red, align=left] (163.15:2.2) node {\footnotesize Ángulo de\\\footnotesize incidencia};
+        \draw [align=left] (-30:1) node {\footnotesize Punto de\\\footnotesize incidencia};
+
+        % Grid
+        %\draw[help lines] (-3,-3) grid (3,3);
+    \end{tikzpicture}
+    \caption{\textit{Ley de la reflexión.}}
+    \label{fig:reflection-law}
+\end{figure}
+\shorthandon{>}
+Los ultrasonidos se reflejan en las superficies que dividen dos medios de diferente
+impedancia acústica y densidad. Un transductor configurado para operar como emisor,
+emite señales de impulsos ultrasónicos y el sistema de ecosonda mide el tiempo de tránsito
+del pulso desde el emisor hasta el receptor después de reflejarse en la superficie. Para
+simplificar la configuración, el emisor y el receptor están en el mismo lugar y el tiempo entre
+la transmisión y la recepción se puede utilizar para determinar la distancia del transmisor a
+la superficie reflectante (si la velocidad del sonido es conocida \eqref{eq:speed-sound}) o también para determinar
+la velocidad del sonido si la distancia recorrida por el pulso es conocida.
+\begin{equation}\label{eq:speed-sound}
+    v=331\sqrt{1+\frac{T_c}{273}}
+\end{equation}
+Para los gases, la velocidad del sonido está dada por el módulo de volumen $B$ y la densidad volumétrica en cuestión $\rho$. Además, la velocidad del sondio \eqref{eq:speed-sound} también depende de la temperatura del medio. \cite{serway_jewett_2017}
+\section{Metodología}
+El desarrollo del proyecto se realizó en tres etapas o fases metodológicas, en las cuales
+se realizó la recolección de los datos y posteriormente su respectivo procesamiento. En la
+primera fase, se observó la generación de ondas ultrasónicas y luego su reflexión en una
+superficie metálica con el objetivo de verificar la ley de la reflexión. En la segunda fase, se
+verificó el principio de ecosonda para posteriormente encontrar el valor experimental del
+sonido y la distancia entre dos obstáculos. Finalmente, en la fase tres se procesó la
+información obtenida en las primeras fases con el objetivo de demostrar la ley de la reflexión
+y de obtener la velocidad del sonido.
+\subsection{Materiales}
+\begin{itemize}
+    \item Dos transductores ultrasónicos de $40\ KHz$.
+    \item Generador de $40\ Khz$.
+    \item Amplificador de AC.
+    \item Un espejo cóncavo.
+    \item Un osciloscopio de dos canales.
+    \item Una base de pieza giratoria con escala angular.
+    \item Una placa de reflexión.
+\end{itemize}
+\subsection{Fase 1}
+En esta primera fase se observó la generación de las ondas de ultrasonido y
+se verificó la ley de la reflexión. Para esto, se contó con un transductor como transmisor
+ubicado en el punto focal de un reflector cóncavo, con el fin de formar una onda plana
+propagada en el aire hasta una superficie reflectora. La onda reflejada fue captada por un
+transductor en modo receptor, el cual se encontraba acoplado a un osciloscopio que registraba la
+onda de voltaje, cuya amplitud es proporcional a la amplitud de la onda de ultrasonido
+captada. El emisor se colocó a un ángulo fijo $\alpha=45\degree$ entre la normal y el transductor
+emisor (Fig. \ref{fig:reflection-law}). Luego se ajustó el ángulo $\beta$ en $45\degree$ entre el receptor y la normal de
+la superficie reflectora. Se registró la amplitud de la onda de voltaje mostrada en el
+osciloscopio. Este procedimiento se repitió para diferentes ángulos $\beta$,
+haciendo un barrido paso a paso de $3\degree$ para ángulos mayores y menores de $45\degree$,
+conservando el ángulo $\alpha$. Luego, se ajustó un nuevo ángulo $\alpha$ y nuevamente se realizó
+un barrido para registrar el ángulo $\beta$ que correspondía a la máxima intensidad
+captada por el receptor, es decir, el ángulo de reflexión.
+\subsection{Fase 2}
+En esta fase se verificó el principio de la ecosonda con el fin de obtener la
+velocidad del sonido y la distancia entre dos obstáculos. Para esto, se realizó el montaje
+indicado (Fig. \ref{fig:ecosound}). Primero, se dispuso de los dos transductores piezoeléctricos,
+emisor y receptor (juntos) y a la misma distancia $d$ de la placa reflectora. Luego, se registró el tiempo del pulso sonoro de acuerdo
+a la señal en el osciloscopio. Este tiempo es el que invierte la onda en recorrer
+la distancia $2d$, es decir, desde que es emitida hasta que es recibida por el receptor. La
+distancia $d$ se variaró entre $10\ cm$ y $1m$ para registrar los datos de tiempo contra distancia. Posteriormente, para
+dos distancias $d$ se colocó un segundo obstáculo y se registraron los valores del tiempo del
+pulso sonoro entre los dos obstáculos. Por último, se registró el valor de la
+temperatura del laboratorio.
+\shorthandoff{>}
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}%[scale=1.5, transform shape]
+        %Reflector
+        \draw [very thick] (2,1) -- (2,-1);
+
+        %Distance
+        \draw [->,thick] (0.5,-0.2) -- (2,-0.2);
+        \draw [->,thick] (-0.5,-0.2) -- (-2,-0.2);
+        \draw [dashed] (-2, 0.2) -- (2, 0.2);
+
+        %Transductors
+        %first
+        \draw (-2,0.3) -- ++(0,0.5) -- ++(-1,0) -- ++(0,-0.5) -- ++(1,0);
+        \draw (-2,0.1) -- ++(0,-0.5) -- ++(-1,0) -- ++(0,0.5) -- ++(1,0);
+
+        %Labels
+        \draw [align=left] (35:1.5) node {\footnotesize Reflector};
+        \draw [align=left] (158.198:2.69) node {\footnotesize Transductores};
+        \draw [align=left] (-90:0.25) node {\footnotesize $d$};
+
+        % Grid
+        %\draw[help lines] (-3,-3) grid (3,3);
+    \end{tikzpicture}
+    \caption{\textit{Montaje ecosonda.}}
+    \label{fig:ecosound}
+\end{figure}
+\shorthandon{>}
+
+\subsection{Fase 3}
+Se procesó la información obtenida en las primeras fases con el objetivo de
+demostrar la ley de la reflexión, verificar el principio de la ecosonda y obtener la velocidad
+del sonido. Primero, se analizó la información registrada en las tablas de datos. Luego,
+se realizó la verificación de la ley de la reflexión, de acuerdo a los datos registrados, se graficó el voltaje $V$ que indica la intensidad reflejada (ordenadas) en función
+del ángulo $\beta$ (abscisas). Después se procesió a realizar un ajuste a los datos mediante
+una gaussiana, se observó el perfil obtenido y se hizo un análisis del resultado. Luego,
+se determinó la anchura angular del valor medio de la distribución de intensidad.\par
+\bigskip
+Segundo, se construyó una gráfica de $\beta$ en función de $\alpha$ y se
+realizó a los puntos un ajuste mediante regresión lineal. Se analizó la ecuación obtenida
+y se interpretó su pendiente. Luego, se comparó esta pendiente con el valor de la unidad
+a través del porcentaje de error.
+Por otra parte, a partir de los datos registrados, se realizó una gráfica de $2d$
+(ordenadas) en función del tiempo (abcisas). Se realizó a los puntos un ajuste mediante
+regresión lineal. Se analizó la ecuación obtenida y se interpretó su pendiente. Se
+comparó mediante porcentaje de error la velocidad del sonido obtenida a partir de la
+gráfica anterior con la velocidad calculada a partir de la expresión \eqref{eq:speed-sound}, en
+donde $T_c$ es la temperatura en grados Celsius, registrada en el laboratorio.\par
+\bigskip
+Finalmente, a partir de los datos de la diferencia de tiempo $\Delta t$ (tiempo del pulso entre los
+dos obstáculos) y usando la velocidad del sonido calculada anteriormente, se encontró la
+distancia entre los obstáculos, $\Delta d$, y se comparó mediante porcentaje de error con las
+distancias entre obstáculos registradas.
+\section{Tratamiento de datos} \label{TD}
+\section{Análisis de resultados}
+\section{Conclusiones}
+\section{Referencias} 
+\bibliographystyle{unsrt}
+\bibliography{../general-references/references}
+\end{document}
