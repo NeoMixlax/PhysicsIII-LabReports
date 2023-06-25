@@ -19,7 +19,7 @@
 
 \pagestyle{fancy} 
 \chead{\bfseries Informe 5 - Grupo C1B. Subgrupo 2} 
-\rhead{10 de Junio de 2023}
+\rhead{23 de Junio de 2023}
 \cfoot{Universidad Industrial de Santander} 
 \rfoot{\thepage} 
 
@@ -252,8 +252,95 @@ dos obstáculos) y usando la velocidad del sonido calculada anteriormente, se en
 distancia entre los obstáculos, $\Delta d$, y se comparó mediante porcentaje de error con las
 distancias entre obstáculos registradas.
 \section{Tratamiento de datos} \label{TD}
+\subsection{Fase 1}
+A continuación se registran los datos tomados para las diferentes tablas (Cdr. \ref{tab:b-angle}, \ref{tab:a-n-b}, \ref{tab:d-n-t}, \ref{tab:periods})
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        $\beta$ & $U(V)$ \\
+        \hline\hline
+        $30$° & $685$ \\
+        $33$° & $920$ \\
+        $36$° & $1000$ \\
+        $39$° & $1440$ \\
+        $42$° & $1440$ \\
+        $45$° & $3040$ \\
+        $48$° & $2140$ \\
+        $51$° & $1000$ \\
+        $54$° & $1020$ \\
+        $57$° & $800$ \\
+        \hline
+    \end{tabular}
+    \label{tab:b-angle}
+    \caption{\textit{Amplitud de voltaje de la señak del receptor para $\alpha=45$° como función de $\beta$}}
+\end{table}
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        $\alpha$ & $\beta$ \\
+        \hline\hline
+        $10$° & $11$°\\
+        $20$° & $29$°\\
+        $30$° & $30$°\\
+        $40$° & $40$°\\
+        $50$° & $50$°\\
+        $60$° & $59$°\\
+        $70$° & $69.5$°\\
+        $80$° & $79$°\\
+        \hline
+    \end{tabular}
+    \label{tab:a-n-b}
+    \caption{\textit{Verificación de la reflexión.}}
+\end{table}
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        $d\ [cm]$ & $t\ [ms]$\\
+        \hline\hline
+        $10$ & $960$\\
+        $20$ & $1560$\\
+        $30$ & $2080$\\
+        $40$ & $2680$\\
+        $50$ & $3200$\\
+        $60$ & $3800$\\
+        $70$ & $4560$\\
+        $80$ & $4960$\\
+        \hline
+    \end{tabular}
+    \label{tab:d-n-t}
+\end{table}
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $T$ placa $[cm]$ & $T$ obstáctulo $[ms]$ & $d$ obstáculo $[cm]$\\
+        \hline\hline
+        $4960$ & $2080$ & $30$\\
+        $4960$ & $3240$ & $50$\\
+        \hline
+    \end{tabular}
+    \label{tab:periods}
+    \caption{\textit{Relación de tiempos de la placa y el obstáculo contra la distancia del obstáculo. La distancia de la placa fue 80 cm. La temperatura era de 25.07°C.}}
+\end{table}
 \section{Análisis de resultados}
+En la comprobación experimental que se realizó para verificar el principio de funcionamiento de la ecosonda, se midió la amplitud de la señal del receptor en función del ángulo $\beta$. El ángulo $\beta$ es el ángulo formado entre la dirección de propagación de la onda sonora y la superficie del objeto que
+refleja la onda sonora. Cuando el ángulo $\beta$ es igual a cero grados, la onda sonora se refleja directamente hacia el transmisor de la ecosonda y la amplitud de la señal del receptor es máxima. A medida que el ángulo $\beta$ aumenta, la onda sonora se refleja en un ángulo cada vez mayor y la amplitud de la
+señal del receptor disminuye.\par
+\bigskip
+En el experimento, se encontró que la amplitud de voltaje de la señal del receptor era máxima a $45$ grados. Esto sugiere que el objeto que reflejó la onda sonora estaba ubicado a una distancia óptima y en un ángulo óptimo para reflejar la mayor cantidad de energía hacia el receptor de la ecosonda.
+Además, el hecho de que la amplitud de la señal del receptor disminuyera a medida que el ángulo $\beta$ aumentaba sugiere que los objetos ubicados en ángulos mayores a $45$ grados no reflejaban suficiente energía hacia el receptor de la ecosonda para ser detectados con precisión.\par
+\bigskip
+En resumen, los resultados obtenidos en el experimento sugieren que existe una relación inversa entre el ángulo $\beta$ y la amplitud de la señal del receptor (tal y como se esperaba). A medida que el ángulo $\beta$ aumenta, la amplitud de la señal del receptor disminuye. Además, se encontró que el
+ángulo óptimo para detectar objetos con la ecosonda fue de $45$ grados.
 \section{Conclusiones}
+Se puede concluir que se llevó a cabo un experimento riguroso y bien diseñado para comprobar el principio de funcionamiento de la ecosonda. La medición de la amplitud de la señal del receptor en función del ángulo $\beta$ fue una forma efectiva de analizar la relación entre estas dos variables.
+Además, la selección de incrementos de $3$ grados para medir el ángulo $\beta$ permitió obtener una gran cantidad de datos y una curva suave al graficar los resultados.
+Es importante destacar que se debe tener en cuenta la precisión y la calibración de los instrumentos utilizados en el experimento para obtener resultados confiables. Además, es necesario controlar las variables que podrían afectar los resultados.\par 
+\bigskip
+En general, el experimento fue exitoso en demostrar el principio de funcionamiento de la ecosonda y proporcionó información valiosa.
 \section{Referencias} 
 \bibliographystyle{unsrt}
 \bibliography{../general-references/references}
